@@ -12,10 +12,11 @@ segments = set() # set of all street segments (edges) on a map
 class Street: # street object includes its intersections
     def __init__(self, name, intersections: list, weights: list):
         self.name, self.inters, self.dists = name, intersections, weights
-    def get_edges(self) -> set[tuple]:
-        return {Edge(self.name, self.inters[i], self.inters[i + 1], self.dists[i]) for i in range(len(self.dists))}
+        global segments
+        new_edges = {Edge(self.name, self.inters[i], self.inters[i + 1], self.dists[i]) for i in range(len(self.dists))}
+        segments |= new_edges # add new street segments based on new information
 
-def test_segments() -> None: # throwaway function to output the details of every segment on the map
+def test_segments(): # throwaway function to output the details of every segment on the map
     for segment in segments:
         print(f'Street Segment: Connecting {segment.a} and {segment.b}. Distance: {segment.dist} meters.')
 
@@ -24,8 +25,8 @@ Danforth = Street('Danforth', ['Broadview', 'Chester', 'Pape', 'Donlands', 'Gree
                    'Woodbine', 'Main', 'Victoria Park', 'Warden', 'Kennedy'], [100] * 10)
 
 test_segments()
-segments |= Danforth.get_edges()
-test_segments()
+
+
 
 '''
 Queen_Street_E_1 = Edge("Greenwood Ave", "Coxwell Ave", 850)
