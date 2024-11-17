@@ -1,7 +1,14 @@
+import random
+import datetime
+
 # Initialize classes and functions
 class City:
     def __init__(self, city: str, province: str, country: str):
         self.city, self.province, self.country = city, province, country
+
+class Query:
+    def __init__(self, pickup, dropoff, time):
+        self.pickup, self.dropoff, self.time = pickup, dropoff, time
 
 # UNUSED
 def address_validation(msg: str, city, locator): # determine pickup and dropoff spots
@@ -25,9 +32,9 @@ def give_directions(locStart, locStop, graph, ox):
 
     # Find shortest path
     path = ox.shortest_path(G=graph, orig=node1, dest=node2, weight='travel_time', cpus=None)
-    pathDist = sum([graph[path[i]][path[i + 1]][0].get('length') for i in range(len(path) - 1)])
+    return(path)
 
-    # Return directions
+def interpret_directions(path, graph):
     directions = {}
     prevStreetName = None
     for i in range(len(path) - 1):
@@ -41,8 +48,24 @@ def give_directions(locStart, locStop, graph, ox):
         if type(streetName) == str and streetLen:
             directions[streetName] += streetLen
     
+    # Return directions
+    pathDist = sum([graph[path[i]][path[i + 1]][0].get('length') for i in range(len(path) - 1)])
     directionList = [f'Route Length: {pathDist / 1000:.1f} km', 'Directions:']
     for key in directions:
         directionList.append(f'{key}: {directions[key]/ 1000:.1f} km')
 
     return directionList
+
+# Incomplete, conceptual
+def bus_queue(queries: list[Query], graph, ox):
+    busLocation = random.randint(1, len(graph))
+    nodes = []
+    for query in queries:
+        nodes.append(query.pickup, query.dropoff)
+        priorityBias = datetime.datetime.now() - query.time
+    path = []
+    for node in nodes:
+        priority = 'example' # minimize shortest distance between busLocation and a node, then add priority biases
+        nodes.remove(priority)
+        path += ox.shortest_path(G=graph, orig=busLocation, dest=priority)
+    return path

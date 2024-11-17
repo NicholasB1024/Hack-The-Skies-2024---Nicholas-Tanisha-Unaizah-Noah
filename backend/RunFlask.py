@@ -2,6 +2,7 @@ import osmnx as ox # import osmnx
 from geopy.geocoders import Nominatim # enable HTTP requests to Nominatim API
 from flask import Flask, render_template, request, jsonify # flask
 import Mapping
+import datetime
 
 locator = Nominatim(user_agent='PathFindr') # establish locator object
 graph = ox.load_graphml(filepath='Hack-The-Skies\\backend\\toronto_geodata.graphml') # load city graph (below generates city graph instead)
@@ -25,7 +26,8 @@ def find_route():
         if not locStart or not locStop:
             return jsonify({"error": "Unable to locate one or both addresses."}), 400
 
-        directions = Mapping.give_directions(locStart, locStop, graph, ox)
+        path = Mapping.give_directions(locStart, locStop, graph, ox)
+        directions = Mapping.interpret_directions(path, graph, ox)
 
         return jsonify({
         "shortestPathLength": None,
