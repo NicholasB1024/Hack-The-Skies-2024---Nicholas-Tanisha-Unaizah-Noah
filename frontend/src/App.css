@@ -21,7 +21,7 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: rgb(255, 255, 255);
 }
 
 .App-link {
@@ -36,3 +36,37 @@
     transform: rotate(360deg);
   }
 }
+
+body {
+  font-family: Courier New, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f5f5f5;
+}
+
+.floating-btn {
+  font-family: Roboto;
+  position: fixed;
+  bottom: 250px; 
+  right: 680px; 
+  background: #220582; 
+  color: white; 
+  padding: 15px 30px;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  cursor: pointer; 
+  font-size: 16px; 
+  border: none;
+  transition: background 0.3s ease, transform 0.3s ease; 
+}
+
+.floating-btn:hover {
+  background: #0073ff;
+  transform: scale(1.05);
+}
+
+.floating-btn:active {
+  background: #0073ff;
+  transform: scale(1);
+}
+

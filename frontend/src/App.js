@@ -1,25 +1,39 @@
 import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import { useState } from 'react';
+import Header from './components/Header';
+import LocationInput from './components/LocationInput';
+import Greeting from './components/Greeting';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [searchData, setSearchData] = useState(null);
+
+    const handleSearch = (data) => {
+        console.log('User input:', data); //logs the location and destination
+        setSearchData(data);
+    };
+
+    return (
+        <div>
+            <Header />
+            <main>
+                <Greeting name = "John" />
+            </main>
+            <LocationInput onSearch={handleSearch} />
+            {searchData && (
+                <div style={{ textAlign: 'center', marginTop: '20px' }}>
+                    <h2>Searching for Routes</h2>
+                    <p>
+                        From: <strong>{searchData.currentLocation}</strong> <br />
+                        To: <strong>{searchData.destination}</strong>
+                    </p>
+                </div>
+            )}
+        </div>
+    );
 }
+
+
 
 export default App;
