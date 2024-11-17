@@ -3,6 +3,7 @@ class City:
     def __init__(self, city: str, province: str, country: str):
         self.city, self.province, self.country = city, province, country
 
+# UNUSED
 def address_validation(msg: str, city, locator): # determine pickup and dropoff spots
     while True:
         location = None
@@ -17,19 +18,16 @@ def address_validation(msg: str, city, locator): # determine pickup and dropoff 
             break
     return location
 
-def shortest_path(locStart, locStop, graph, ox):
+def give_directions(locStart, locStop, graph, ox):
     # Find corresponding graph nodes for each location
     node1 = ox.distance.nearest_nodes(graph, float(locStart.longitude), float(locStart.latitude))
     node2 = ox.distance.nearest_nodes(graph, float(locStop.longitude), float(locStop.latitude))
 
     # Find shortest path
-    print(graph[node1], '\n', graph[node2])
     path = ox.shortest_path(G=graph, orig=node1, dest=node2, weight='travel_time', cpus=None)
     pathDist = sum([graph[path[i]][path[i + 1]][0].get('length') for i in range(len(path) - 1)])
-    print(f'Shortest Path Length: {pathDist / 1000:.1f} km')
 
-    # Print directions
-    print('\nDirections:')
+    # Return directions
     directions = {}
     prevStreetName = None
     for i in range(len(path) - 1):
@@ -42,6 +40,9 @@ def shortest_path(locStart, locStop, graph, ox):
         streetLen = graph[path[i]][path[i + 1]][0].get('length')
         if type(streetName) == str and streetLen:
             directions[streetName] += streetLen
+    
+    directionList = [f'Route Length: {pathDist / 1000:.1f} km', 'Directions:']
     for key in directions:
-        print(f'{key}: {directions[key]/ 1000:.1f} km')
-    print('Arrived!\n')
+        directionList.append(f'{key}: {directions[key]/ 1000:.1f} km')
+
+    return directionList
