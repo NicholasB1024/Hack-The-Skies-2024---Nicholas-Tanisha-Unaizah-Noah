@@ -1,19 +1,17 @@
 # Initialize classes
-class Pickup: # initialize class for pickup requests
-    def __init__(self, node: set[str, str], time):
-        self.loc, self.time = node, time
-
 class Edge: # edge object represents a street segment (edge) between two intersections (nodes)
     def __init__(self, street: str, street_start: str, street_end: str, weight: int):
         self.a, self.b, self.dist = {street, street_start}, {street, street_end}, weight
 
-segments = set() # set of all street segments (edges) on a map
+segments = {} # dict of all street segments (edges) on a map
 
 class Street: # street object includes its intersections
     def __init__(self, name: str, intersections: list, weights: list): # parallel lists for intersections and weights
         self.name, self.inters, self.dists = name, intersections, weights
-        new_edges = {Edge(self.name, self.inters[i], self.inters[i + 1], self.dists[i]) for i in range(len(self.dists))}
         global segments
+        for i in range(len(self.dists)):
+            new_edges = {Edge(self.name, self.inters[i], self.inters[i + 1], self.dists[i])}
+            segments[sorted(list())]
         segments |= new_edges # add new street segments based on new information
 
 def test_segments(): # throwaway function to output the details of every segment on the map
