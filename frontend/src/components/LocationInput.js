@@ -47,6 +47,7 @@ const LocationInput = ({ onSearch }) => {
 export default LocationInput;
 */
 
+/*
 import axios from "axios";
 import React, { useState } from "react";
 
@@ -117,4 +118,51 @@ const LocationInput = ({ onSearch }) => {
     );
 };
 
-export default LocationInput;
+export default LocationInput; */
+import axios from "axios";
+import React, { useState } from 'react';
+
+const LocationInput = ({ onSearch }) => {
+    const [pickup, setPickup] = useState('');
+    const [dropoff, setDropoff] = useState('');
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (pickup && dropoff) {
+            onSearch({ pickup, dropoff });
+        } else {
+            alert('Please fill in both fields');
+        }
+    };
+
+    return (
+        <form onSubmit={handleSubmit} className="location-form">
+            <div className="form-group">
+                <label>Pickup Location:</label>
+                <input
+                    type="text"
+                    value={pickup}
+                    onChange={(e) => setPickup(e.target.value)}
+                    placeholder="Enter pickup location"
+                    className="form-control"
+                />
+            </div>
+            <div className="form-group">
+                <label>Dropoff Location:</label>
+                <input
+                    type="text"
+                    value={dropoff}
+                    onChange={(e) => setDropoff(e.target.value)}
+                    placeholder="Enter dropoff location"
+                    className="form-control"
+                />
+            </div>
+            <button type="submit" className="btn btn-primary mt-3">
+                Find Route
+            </button>
+        </form>
+    );
+};
+
+export default LocationInput; 
+

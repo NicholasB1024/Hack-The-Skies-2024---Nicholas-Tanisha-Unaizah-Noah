@@ -1,5 +1,16 @@
+
 .App {
   text-align: center;
+  margin: 20px;
+}
+
+.location-form {
+  max-width: 500px;
+  margin: auto;
+}
+
+.directions {
+  margin-top: 20px;
 }
 
 .App-logo {
